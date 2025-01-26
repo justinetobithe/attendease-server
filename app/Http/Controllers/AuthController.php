@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AuthLoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Student;
 use App\Models\User;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
@@ -38,6 +39,14 @@ class AuthController extends Controller
         $validated['password'] = Hash::make($validated['password']);
 
         $user = User::create($validated);
+
+        if ($validated['role'] === 'student') {
+            Student::create([
+                'user_id' => $user->id,
+                'strand_id' => $validated['strand_id'] ?? null,
+                'student_number' => $validated['student_number'] ?? null,
+            ]);
+        }
 
         return response()->json([
             'status' => true,
@@ -82,7 +91,7 @@ class AuthController extends Controller
                 ]);
             }
 
-            if ($user->role !== 'parent' && $user->role !== 'admin') {
+            if ($user->role !== 'student' && $user->role !== 'guard') {
                 return response()->json([
                     'status' => false,
                     'message' => __('messages.errors.role_access_denied'),

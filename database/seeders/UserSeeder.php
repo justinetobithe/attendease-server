@@ -32,6 +32,7 @@ class UserSeeder extends Seeder
                 'email' => strtolower(str_replace(' ', '', $student['first_name'])) . '@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'student',
+                'status' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -41,8 +42,9 @@ class UserSeeder extends Seeder
             'first_name' => 'Admin',
             'last_name' => 'User',
             'email' => 'admin@example.com',
-            'password' => Hash::make('adminpassword'),
+            'password' => Hash::make('password'),
             'role' => 'admin',
+            'status' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -51,8 +53,9 @@ class UserSeeder extends Seeder
             'first_name' => 'Guard',
             'last_name' => 'User',
             'email' => 'guard@example.com',
-            'password' => Hash::make('guardpassword'),
+            'password' => Hash::make('password'),
             'role' => 'guard',
+            'status' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

@@ -26,11 +26,11 @@ class UserController extends Controller
                 $q->where('first_name', 'like', "%{$filter}%")
                     ->orWhere('last_name', 'like', "%{$filter}%")
                     ->orWhere('email', 'like', "%{$filter}%")
-                    ->orWhere('phone', 'like', "%{$filter}%");
+                    ->orWhere('role', 'like', "%{$filter}%");
             });
         }
 
-        if (in_array($sortColumn, ['first_name', 'last_name', 'email', 'phone'])) {
+        if (in_array($sortColumn, ['first_name', 'last_name', 'email', 'role'])) {
             $query->orderBy($sortColumn, $sortDesc);
         }
 

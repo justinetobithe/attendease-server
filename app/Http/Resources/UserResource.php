@@ -24,6 +24,7 @@ class UserResource extends JsonResource
             // 'image' => $this->image ? Storage::url($this->image) : '',
             'student' => $this->student ? [
                 'id' => $this->student->id,
+                'student_number' => $this->student->student_number,
                 'strand' => $this->student->strand ? [
                     'name' => $this->student->strand->name,
                 ] : null,

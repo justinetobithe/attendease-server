@@ -39,6 +39,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function generateToken()
+    {
+        return $this->createToken("auth-{$this->id}")->plainTextToken;
+    }
+
     public function student()
     {
         return $this->hasOne(Student::class);
