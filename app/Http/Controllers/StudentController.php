@@ -50,4 +50,15 @@ class StudentController extends Controller
             'data' => $students,
         ]);
     }
+
+    public function show($id)
+    {
+        $student = Student::with(['user', 'strand', 'attendanceRecords'])->find($id);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Student fetched successfully',
+            'data' => $student,
+        ]);
+    }
 }

@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MeController;
 use App\Http\Controllers\StrandController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\UserController; 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,10 +52,14 @@ Route::middleware('auth:sanctum', 'throttle:60,1')->group(function () {
     });
 
     Route::get('/students', [StudentController::class, 'index']);
+    Route::prefix('/student')->group(function () {
+        Route::post('/', [StudentController::class, 'show']);
+    });
 
     Route::get('/attendance-records', [AttendanceRecordController::class, 'index']);
     Route::prefix('/attendance-record')->group(function () {
         Route::post('/', [AttendanceRecordController::class, 'store']);
+        Route::get('/student/{studentNumber}', [AttendanceRecordController::class, 'getByStudentNumber']);
     });
 });
 

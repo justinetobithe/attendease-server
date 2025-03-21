@@ -70,6 +70,8 @@ class AttendanceRecordController extends Controller
                     'time_out' => Carbon::now()->format('H:i:s'),
                 ]);
 
+                $existingAttendanceRecord->load('student.user');
+
                 return response()->json([
                     'status' => 'success',
                     'message' => __('messages.success.time_out_updated'),
@@ -90,6 +92,8 @@ class AttendanceRecordController extends Controller
                 'time_in' => Carbon::now()->format('H:i:s'),
                 'time_out' => null,
             ]);
+
+            $attendanceRecord->load('student.user');
 
             return response()->json([
                 'status' => 'success',
@@ -114,6 +118,29 @@ class AttendanceRecordController extends Controller
         return response()->json([
             'status' => 'error',
             'message' => __('messages.errors.unknown_error'),
+        ]);
+    }
+
+    public function getByStudentNumber(Request $request, $studentNumber)
+    {
+        $student = Student::where('student_number', $studentNumber)->first();
+
+        if (!$student) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Student not found.',
+            ], 404);
+        }
+
+        $attendanceRecords = AttendanceRecord::with(['student.user'])
+            ->where('student_id', $student->id)
+            ->orderBy('date', 'desc')
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Attendance records retrieved successfully.',
+            'data' => $attendanceRecords,
         ]);
     }
 }

@@ -12,7 +12,7 @@ return [
         'fetched' => 'Data fetched successfully!',
         'login' => 'Login successful!',
         'status_updated' => 'Status updated successfully!',
-        'attendance_record_created' => 'Attendance record successfully created. Time In set to now.',
+        'attendance_record_created' => 'Attendance record successfully created.',
         'time_out_updated' => 'Time Out updated successfully.',
     ],
     'invalid' => [
